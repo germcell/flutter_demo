@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_workspace/http/request_log_interceptor.dart';
+import 'package:flutter_workspace/http/response_interceptor.dart';
 import 'http_method.dart';
 
 /// dio单例
@@ -34,6 +36,9 @@ class DioInstance {
         receiveTimeout: receiveTimeout ?? _defaultTime,
         sendTimeout: sendTimeout ?? _defaultTime,
       );
+      // 添加拦截器
+      _dio.interceptors.add(RequestLogInterceptor());
+      _dio.interceptors.add(ResponseInterceptor());
     } catch (e) {
       print("Dio 初始化失败: $e");
     }

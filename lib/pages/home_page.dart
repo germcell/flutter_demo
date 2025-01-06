@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
-import 'package:flutter_workspace/datas/home_list_data.dart';
+import 'package:flutter_workspace/repository/datas/home_list_data.dart';
 import 'package:flutter_workspace/pages/home_vm.dart';
 import 'package:flutter_workspace/route/routes.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
     // _initBannerData();
     // 获取数据
     homeViewModel.getHomeBanner();
-    homeViewModel.getHomeList();
+    homeViewModel.getAllHomeList();
   }
 
   // 这种强制刷新的方式，不推荐使用，因为会导致整个页面刷新
@@ -146,11 +146,14 @@ class _HomePageState extends State<HomePage> {
                               )),
                           // Expanded(child: SizedBox.width(10),
                           SizedBox(width: 5),
-                          Text("置顶",
-                              style: TextStyle(
-                                color: Color.fromARGB(179, 17, 17, 17),
-                                fontSize: 12,
-                              )),
+                          (item.type == 1)
+                              ? Text("置顶",
+                                  style: TextStyle(
+                                    // color: Color.fromARGB(89, 158, 94, 94),
+                                    color: Colors.blueAccent,
+                                    fontSize: 12,
+                                  ))
+                              : SizedBox(),
                         ],
                       ),
                       Container(

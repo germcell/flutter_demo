@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_workspace/datas/home_banner_data.dart';
-import 'package:flutter_workspace/datas/home_list_data.dart';
+import 'package:flutter_workspace/repository/api.dart';
+import 'package:flutter_workspace/repository/datas/home_banner_data.dart';
+import 'package:flutter_workspace/repository/datas/home_list_data.dart';
 import 'package:flutter_workspace/http/dio_instance.dart';
+import 'package:flutter_workspace/repository/datas/home_top_list_data.dart';
 
 /// 如果使用浏览器模拟设备，需要设置跨域，物理设备不需要
 /// 文章：https://blog.csdn.net/shaoxiukun/article/details/131084044
@@ -11,7 +13,7 @@ import 'package:flutter_workspace/http/dio_instance.dart';
 class HomeViewModel with ChangeNotifier {
   // 数据由provider管理
   List<HomeBannerItemData>? bannerData;
-  List<HomeListItemData>? listData;
+  List<HomeListItemData>? listData = [];
 
   // late Dio dio;
   //
@@ -37,32 +39,48 @@ class HomeViewModel with ChangeNotifier {
   // 异步方法
   Future getHomeBanner() async {
     // Response response = await dio.get("/banner/json");
-    Response response = await DioInstance.instance().get("/banner/json");
+    var response = await Api.instance.getHomeBanner();
     var data = HomeBannerData.fromJson(response.data);
     if (data.errorCode == 0) {
-      bannerData = data.data;
+      bannerData = data.data ?? [];
     } else {
-      bannerData = [];
+      // TODO 其它业务状态码处理
     }
-
     // 通知监听者
     notifyListeners();
   }
 
   Future getHomeList() async {
     // Response response = await dio.get("/article/list/1/json");
-    Response response =
-        await DioInstance.instance().get("/article/list/1/json");
+    var response = await Api.instance.getHomeList();
     var data = HomeListData.fromJson(response.data);
     if (data.errorCode == 0) {
-      listData = data.data?.datas;
+      listData?.addAll(data.data?.datas ?? []);
     } else {
-      listData = [];
+      // TODO 其它业务状态码处理
     }
-
     // 通知监听者
     notifyListeners();
   }
+
+  Future getHomeTopList() async {
+    var response = await Api.instance.getHomeTopList();
+    var data = HomeTopListData.fromJson(response.data);
+    if (data.errorCode == 0) {
+      listData?.clear();
+      listData?.addAll(data.data ?? []);
+    } else {
+      // TODO 其它业务状态码处理
+    }
+    notifyListeners();
+  }
+
+  /// 获取首页所有list数据，包普通数据和置顶数据
+  Future getAllHomeList() async {
+    await getHomeTopList();
+    await getHomeList();
+  }
+
 }
 
 void main() async {
