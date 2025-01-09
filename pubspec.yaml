@@ -69,6 +69,8 @@ dev_dependencies:
   shared_preferences: ^2.0.15
   # 轮播图
   flutter_swiper_view: ^1.1.8
+  # 下拉刷新
+  pull_to_refresh: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -6,6 +6,7 @@ import 'package:flutter_workspace/repository/datas/home_list_data.dart';
 import 'package:flutter_workspace/pages/home_vm.dart';
 import 'package:flutter_workspace/route/routes.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +19,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HomeViewModel homeViewModel = HomeViewModel();
+  RefreshController refreshController = RefreshController();
+  int _page = 1;
 
   @override
   void initState() {
@@ -46,14 +49,37 @@ class _HomePageState extends State<HomePage> {
         child: Scaffold(
           // 安全区域，除了状态栏和底部栏的区域
           body: SafeArea(
-            // 使Column布局的内容滚动
-            child: SingleChildScrollView(
-                child: Column(
-              children: [
-                _banner(),
-                _listItemView(),
-              ],
-            )),
+            // 上下拉刷新组件
+            child: SmartRefresher(
+              controller: refreshController,
+              // 上下拉刷新
+              enablePullUp: true,
+              enablePullDown: true,
+              header: const ClassicHeader(),
+              footer: const ClassicFooter(),
+              // 下拉刷新回调，先加载banner，加载完后再加载列表
+              onRefresh: () {
+                homeViewModel.getHomeBanner().then((value) {
+                  _page = 1;
+                  homeViewModel.getAllHomeList();
+                  refreshController.refreshCompleted();
+                });
+              },
+              // 上拉加载回调
+              onLoading: () {
+                homeViewModel.getHomeList(++_page).then((value) {
+                  refreshController.loadComplete();
+                });
+              },
+              // 使Column布局的内容滚动
+              child: SingleChildScrollView(
+                  child: Column(
+                children: [
+                  _banner(),
+                  _listItemView(),
+                ],
+              )),
+            ),
           ),
         ));
   }
@@ -162,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                item?.title ?? "",
+                                item.title ?? "",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14,
@@ -171,12 +197,14 @@ class _HomePageState extends State<HomePage> {
                               ))),
                       Row(
                         children: [
-                          Text(
-                            "分类",
-                            style: TextStyle(
-                                color: Color.fromARGB(179, 17, 17, 17),
-                                fontSize: 12),
-                          ),
+                          (item.superChapterName?.isNotEmpty == true)
+                              ? Text(
+                                  item.superChapterName ?? "",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(179, 17, 17, 17),
+                                      fontSize: 12),
+                                )
+                              : SizedBox(),
                           SizedBox(width: 5),
                           Text(
                             "收藏",

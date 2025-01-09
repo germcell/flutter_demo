@@ -50,9 +50,9 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getHomeList() async {
+  Future getHomeList(int page) async {
     // Response response = await dio.get("/article/list/1/json");
-    var response = await Api.instance.getHomeList();
+    var response = await Api.instance.getHomeList(page);
     var data = HomeListData.fromJson(response.data);
     if (data.errorCode == 0) {
       listData?.addAll(data.data?.datas ?? []);
@@ -78,8 +78,22 @@ class HomeViewModel with ChangeNotifier {
   /// 获取首页所有list数据，包普通数据和置顶数据
   Future getAllHomeList() async {
     await getHomeTopList();
-    await getHomeList();
+    await getHomeList(1);
   }
+
+  // TODO 重构首页列表数据请求，需要加上页码再请求
+  // TODO SmartRefresher组件封装
+  // Future getHomeListByPage(int page) async {
+  //   var response = await Api.instance.getHomeTopList();
+  //   var data = HomeListData.fromJson(response.data);
+  //   if (data.errorCode == 0) {
+  //     listData?.clear();
+  //     listData?.addAll(data.data ?? []);
+  //   } else {
+  //     // TODO 其它业务状态码处理
+  //   }
+  //   notifyListeners();
+  // }
 
 }
 
