@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_workspace/pages/tab_page.dart';
 import 'package:flutter_workspace/pages/web_view_page.dart';
 
 import '../pages/home_page.dart';
@@ -8,8 +9,8 @@ class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // 路由名称
     switch (settings.name) {
-      case RoutePath.home:
-        return pageRoute(HomePage(), settings: settings);
+      case RoutePath.tab:
+        return pageRoute(TabPage(), settings: settings);
       case RoutePath.webView:
         return pageRoute(WebViewPage(name: "Form HomePage"),
             settings: settings);
@@ -40,7 +41,7 @@ class Routes {
 
 class RoutePath {
   // 首页
-  static const String home = '/';
+  static const String tab = '/';
 
   // WebView
   static const String webView = '/WebViewPage';

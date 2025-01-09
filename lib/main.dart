@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
           ),
           // 初始化路由
           onGenerateRoute: Routes.generateRoute,
-          initialRoute: RoutePath.home,
+          initialRoute: RoutePath.tab,
         );
       },
     ));
