@@ -8,7 +8,7 @@ import 'mine/mine_page.dart';
 import 'notify/notify_page.dart';
 
 /// 底部导航栏，当有导航栏后需要将此页面设置为路由的首页
-/// TODO 封装导航组件，如果有多个页面需要使用底部导航栏，可以直接使用此组件
+/// TODO 封装导航组件，如果有多个页面需要使用底部导航栏，可以复用
 /// TODO 封装思路：通过传入参数来设置底部导航栏的样式和页面
 /// https://www.bilibili.com/video/BV1Qb421Y7SV?spm_id_from=333.788.player.switch&vd_source=576f401fe95063f8ec1d45c1e06864c9&p=17
 class TabPage extends StatefulWidget {
