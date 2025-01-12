@@ -24,4 +24,14 @@ class Api {
     return response;
   }
 
+  Future getHotKeyList() async {
+    Response response = await DioInstance.instance().get("/hotkey/json");
+    return response;
+  }
+
+  Future getWebsiteList() async {
+    Response response = await DioInstance.instance().get("/friend/json");
+    return response;
+  }
+
 }

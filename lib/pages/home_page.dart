@@ -139,8 +139,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Container(
                   // 容器边距
-                  margin:
-                      EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+                  margin: EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
                   // 内边距
                   padding: EdgeInsets.all(13),
                   // 边框边框
