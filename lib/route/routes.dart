@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_workspace/pages/auth/login_page.dart';
+import 'package:flutter_workspace/pages/auth/register_page.dart';
 import 'package:flutter_workspace/pages/tab_page.dart';
 import 'package:flutter_workspace/pages/web_view_page.dart';
 
@@ -12,8 +14,11 @@ class Routes {
       case RoutePath.tab:
         return pageRoute(TabPage(), settings: settings);
       case RoutePath.webView:
-        return pageRoute(WebViewPage(name: "Form HomePage"),
-            settings: settings);
+        return pageRoute(WebViewPage(name: "Form HomePage"), settings: settings);
+      case RoutePath.login:
+        return pageRoute(LoginPage(), settings: settings);
+      case RoutePath.register:
+        return pageRoute(RegisterPage(), settings: settings);
     }
     // 未定义的路由
     return pageRoute(Scaffold(
@@ -45,4 +50,10 @@ class RoutePath {
 
   // WebView
   static const String webView = '/WebViewPage';
+
+  // login
+  static const String login = '/login';
+
+  // register
+  static const String register = '/register';
 }

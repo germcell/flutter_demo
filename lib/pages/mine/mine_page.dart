@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../route/routes.dart';
+
 /// 个人信息页面
 class MinePage extends StatefulWidget {
   const MinePage({super.key});
@@ -55,16 +57,26 @@ class _MinePageState extends State<MinePage> {
       height: 150,
       color: Color.fromRGBO(68, 138, 255, 51),
       child: Column(
-        // 主轴居中
+        // 子组件主轴居中
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundImage: AssetImage("images/img_default_profile.jpg"),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, RoutePath.login);
+            },
+            child: CircleAvatar(
+              radius: 30,
+              backgroundImage: AssetImage("images/img_default_profile.jpg"),
+            ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: Text("用户名", style: TextStyle(color: Colors.white, fontSize: 15)),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, RoutePath.login);
+            },
+            child: Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Text("用户名", style: TextStyle(color: Colors.white, fontSize: 15)),
+            )
           )
         ],
       ),
