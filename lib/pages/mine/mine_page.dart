@@ -75,7 +75,7 @@ class _MinePageState extends State<MinePage> {
             },
             child: Padding(
               padding: EdgeInsets.only(top: 10),
-              child: Text("用户名", style: TextStyle(color: Colors.white, fontSize: 15)),
+              child: Text("未登录", style: TextStyle(color: Colors.white, fontSize: 15)),
             )
           )
         ],

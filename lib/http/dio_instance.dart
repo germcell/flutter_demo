@@ -63,4 +63,27 @@ class DioInstance {
               responseType: ResponseType.json),
     );
   }
+
+  /// post request
+  Future<Response> post(
+    String path, {
+    data,
+    Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
+    Options? options,
+  }) async {
+    return await _dio.post(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+      cancelToken: cancelToken,
+      options: options ??
+          Options(
+              method: HttpMethod.post,
+              receiveTimeout: _defaultTime,
+              sendTimeout: _defaultTime,
+              responseType: ResponseType.json),
+    );
+  }
+
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_workspace/pages/auth/auth_vm.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -12,6 +14,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   TextEditingController? controller;
+  AuthViewModel authViewModel = AuthViewModel();
 
   @override
   void initState() {
@@ -22,29 +25,36 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _header(),
-            _commonInput("请输入用户名", Icon(Icons.person)),
-            SizedBox(height: 10),
-            _commonInput("请输入密码", Icon(Icons.lock), obscureTextFlag: true),
-            SizedBox(height: 10),
-            _commonInput("请再次输入密码", Icon(Icons.lock), obscureTextFlag: true),
-            SizedBox(height: 20),
-            _cmdButton(),
-            // TextField(
-            //   decoration: InputDecoration(
-            //     hintText: "输入密码",
-            //     prefixIcon: Icon(Icons.lock)
-            //   ),
-            // ),
-          ],
-        ),
-      )
+    return ChangeNotifierProvider<AuthViewModel>(
+      create: (context) {
+        return authViewModel;
+      },
+      child: Scaffold(
+          body: Container(
+            margin: EdgeInsets.only(left: 20, right: 20),
+            child: Consumer<AuthViewModel>(builder: (context, vm, child) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _header(),
+                  _commonInput("请输入用户名", Icon(Icons.person), onChanged: (value) {
+                    vm.authInfo.username = value;
+                  }),
+                  SizedBox(height: 10),
+                  _commonInput("请输入密码", Icon(Icons.lock), obscureTextFlag: true, onChanged: (value) {
+                    vm.authInfo.password = value;
+                  }),
+                  SizedBox(height: 10),
+                  _commonInput("请再次输入密码", Icon(Icons.lock), obscureTextFlag: true, onChanged: (value) {
+                    vm.authInfo.rePassword = value;
+                  }),
+                  SizedBox(height: 20),
+                  _cmdButton(),
+                ],
+              );
+            })
+          )
+      ),
     );
   }
 
@@ -57,7 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
           height: 40,
           margin: EdgeInsets.only(top: 20),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              authViewModel.register();
+            },
             child: Text("点击注册"),
           )
         )
