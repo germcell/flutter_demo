@@ -49,4 +49,13 @@ class Api {
     return response;
   }
 
+  /// 用户登录
+  Future login(String username, String password) async {
+    Response response = await DioInstance.instance().post("/user/login", queryParameters: {
+      "username": username,
+      "password": password
+    });
+    return response;
+  }
+
 }

@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_workspace/pages/tab_page.dart';
+import 'dart:developer';
 
 import '../../route/routes.dart';
+import 'auth_vm.dart';
 
 class LoginPage extends StatefulWidget {
+  // String? echoUsername;
+  // LoginPage({super.key, this.echoUsername});
   const LoginPage({super.key});
 
   @override
@@ -13,13 +18,29 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController? controller;
+  TextEditingController? _usernameController;
+  AuthViewModel authViewModel = AuthViewModel();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    controller = TextEditingController();
+    _usernameController = TextEditingController();
+
+    // 回调函数，在组件渲染完成后执行
+    // 如果有传递用户名，则显示在输入框中（注册用户名回显）
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _registerEchoUsername();
+    });
+  }
+  void _registerEchoUsername() {
+    var argMap = ModalRoute.of(context)?.settings.arguments;
+    // log("argMap: $argMap");
+    if (argMap is Map) {
+      setState(() {
+        _usernameController?.text = argMap["echoUsername"] ?? "";
+        // log("controller: ${_usernameController?.text}");
+      });
+    }
   }
 
   @override
@@ -31,17 +52,13 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _header(),
-            _commonInput("请输入用户名", Icon(Icons.person)),
+            _commonInput("请输入用户名", Icon(Icons.person), controller: _usernameController),
             SizedBox(height: 10),
-            _commonInput("请输入密码", Icon(Icons.lock), obscureTextFlag: true),
+            _commonInput("请输入密码", Icon(Icons.lock), obscureTextFlag: true, onChanged: (value) {
+              authViewModel.authInfo.password = value;
+            }),
             SizedBox(height: 20),
             _cmdButton(),
-            // TextField(
-            //   decoration: InputDecoration(
-            //     hintText: "输入密码",
-            //     prefixIcon: Icon(Icons.lock)
-            //   ),
-            // ),
           ],
         ),
       )
@@ -68,7 +85,19 @@ class _LoginPageState extends State<LoginPage> {
           height: 40,
           margin: EdgeInsets.only(top: 20),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              authViewModel.authInfo.username = _usernameController?.text;
+              final data = await authViewModel.login();
+              if (data != null && mounted) {
+                // Navigator.pushNamed(context, RoutePath.tab);
+                // 跳转到 TabPage 页面，并清空所有历史路由
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => TabPage()),
+                  (route) => false
+                );
+              }
+            },
             child: Text("登录"),
           )
         ),

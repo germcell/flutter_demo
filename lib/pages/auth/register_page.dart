@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_workspace/pages/auth/auth_vm.dart';
 
+import '../../route/routes.dart';
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -67,8 +69,13 @@ class _RegisterPageState extends State<RegisterPage> {
           height: 40,
           margin: EdgeInsets.only(top: 20),
           child: ElevatedButton(
-            onPressed: () {
-              authViewModel.register();
+            onPressed: () async {
+              final data = await authViewModel.register();
+              if (data != null && mounted) {
+                Navigator.pushNamed(context, RoutePath.login, arguments: {
+                  "echoUsername": data.username
+                });
+              }
             },
             child: Text("点击注册"),
           )
