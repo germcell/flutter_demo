@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_workspace/http/cookie_interceptor.dart';
 import 'package:flutter_workspace/http/request_log_interceptor.dart';
 import 'package:flutter_workspace/http/response_interceptor.dart';
 import 'http_method.dart';
@@ -37,6 +38,7 @@ class DioInstance {
         sendTimeout: sendTimeout ?? _defaultTime,
       );
       // 添加拦截器
+      _dio.interceptors.add(CookieInterceptor());
       _dio.interceptors.add(RequestLogInterceptor());
       _dio.interceptors.add(ResponseInterceptor());
     } catch (e) {

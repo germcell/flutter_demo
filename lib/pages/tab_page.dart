@@ -65,32 +65,32 @@ class _TabPageState extends State<TabPage> {
     List<BottomNavigationBarItem> items = [];
     items.add(BottomNavigationBarItem(
       label: "首页",
-      icon: Image.asset("images/icon_bar_home.png", width: 24, height: 24),
+      icon: Image.asset("assets/images/icon_bar_home.png", width: 24, height: 24),
       // TODO 选中后的图标
       // NavbarItem是自定义的组件，用于设置选中后的图标，做了一个动画效果
       activeIcon: NavbarItem(builder: (context) {
-        return Image.asset("images/icon_bar_home.png", width: 24, height: 24);
+        return Image.asset("assets/images/icon_bar_home.png", width: 24, height: 24);
       }),
     ));
     items.add(BottomNavigationBarItem(
       label: "分类",
-      icon: Image.asset("images/icon_bar_category.png", width: 24, height: 24),
+      icon: Image.asset("assets/images/icon_bar_category.png", width: 24, height: 24),
       activeIcon: NavbarItem(builder: (context) {
-        return Image.asset("images/icon_bar_category.png", width: 24, height: 24);
+        return Image.asset("assets/images/icon_bar_category.png", width: 24, height: 24);
       })
     ));
     items.add(BottomNavigationBarItem(
       label: "通知",
-      icon: Image.asset("images/icon_bar_notify.png", width: 24, height: 24),
+      icon: Image.asset("assets/images/icon_bar_notify.png", width: 24, height: 24),
       activeIcon: NavbarItem(builder: (context) {
-        return Image.asset("images/icon_bar_notify.png", width: 24, height: 24);
+        return Image.asset("assets/images/icon_bar_notify.png", width: 24, height: 24);
       })
     ));
     items.add(BottomNavigationBarItem(
       label: "我的",
-      icon: Image.asset("images/icon_bar_mine.png", width: 24, height: 24),
+      icon: Image.asset("assets/images/icon_bar_mine.png", width: 24, height: 24),
       activeIcon: NavbarItem(builder: (context) {
-        return Image.asset("images/icon_bar_mine.png", width: 24, height: 24);
+        return Image.asset("assets/images/icon_bar_mine.png", width: 24, height: 24);
       })
     ));
     return items;

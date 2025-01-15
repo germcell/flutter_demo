@@ -85,7 +85,7 @@ flutter:
   uses-material-design: true
   # 静态资源引入
   assets:
-      - assets/images/
+    - assets/images/
 
 # 生成图标配置
 flutter_icons:

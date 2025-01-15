@@ -55,7 +55,7 @@ class _MinePageState extends State<MinePage> {
     return Container(
       width: double.infinity,
       height: 150,
-      color: Color.fromRGBO(68, 138, 255, 51),
+      color: Color.fromRGBO(68, 138, 255, 1.0),
       child: Column(
         // 子组件主轴居中
         mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +66,7 @@ class _MinePageState extends State<MinePage> {
             },
             child: CircleAvatar(
               radius: 30,
-              backgroundImage: AssetImage("images/img_default_profile.jpg"),
+              backgroundImage: AssetImage("assets/images/img_default_profile.jpg"),
             ),
           ),
           GestureDetector(
