@@ -5,6 +5,12 @@ import 'package:flutter_workspace/repository/datas/home_banner_data.dart';
 import 'package:flutter_workspace/repository/datas/home_list_data.dart';
 import 'package:flutter_workspace/http/dio_instance.dart';
 import 'package:flutter_workspace/repository/datas/home_top_list_data.dart';
+import 'package:intl/intl.dart';
+import 'dart:developer';
+import 'package:oktoast/oktoast.dart';
+
+import '../repository/datas/api_response.dart';
+
 
 /// 如果使用浏览器模拟设备，需要设置跨域，物理设备不需要
 /// 文章：https://blog.csdn.net/shaoxiukun/article/details/131084044
@@ -81,19 +87,52 @@ class HomeViewModel with ChangeNotifier {
     await getHomeList(1);
   }
 
-  // TODO 重构首页列表数据请求，需要加上页码再请求
-  // TODO SmartRefresher组件封装
-  // Future getHomeListByPage(int page) async {
-  //   var response = await Api.instance.getHomeTopList();
-  //   var data = HomeListData.fromJson(response.data);
-  //   if (data.errorCode == 0) {
-  //     listData?.clear();
-  //     listData?.addAll(data.data ?? []);
-  //   } else {
-  //     // TODO 其它业务状态码处理
-  //   }
-  //   notifyListeners();
-  // }
+  String formatTime(num? time) {
+    // 如果 time 为空，返回 null
+    if (time == null) {
+      showToast("请先登录");
+      return "";
+    }
+    // 解析时间戳为 DateTime 对象
+    final DateTime date = DateTime.fromMillisecondsSinceEpoch(time.toInt());
+    // 使用 DateFormat 格式化日期和时间
+    final String formattedDate = DateFormat('yyyy-MM-dd HH:mm').format(date);
+    return formattedDate;
+  }
+
+  /// 收藏文章
+  Future collectArticle(num? id, int idx) async {
+    if (id == null) {
+      showToast("收藏失败:C234");
+      return;
+    }
+    var response = await Api.instance.collectArticle(id);
+    var apiResponse = ApiResponse.fromJson(response.data, null);
+    if (apiResponse.isSuccess) {
+      listData?[idx].collect = true;
+      notifyListeners();
+      showToast("收藏成功");
+    } else {
+      showToast(apiResponse.errorMsg);
+    }
+  }
+
+  /// 取消收藏文章
+  Future unCollectArticle(num? id, int idx) async {
+    if (id == null) {
+      showToast("取消收藏失败:C234");
+      return;
+    }
+    var apiRes = await Api.instance.unCollectArticle(id);
+    if (apiRes.isSuccess) {
+      listData?[idx].collect = false;
+      // 数据改变后通知监听者
+      notifyListeners();
+      showToast("取消收藏成功");
+    } else {
+      showToast(apiRes.errorMsg);
+    }
+  }
 
 }
 

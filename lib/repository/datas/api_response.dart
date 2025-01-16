@@ -25,4 +25,8 @@ class ApiResponse<T> {
       'errorMsg': errorMsg,
     };
   }
+
+  /// 判断操作是否成功
+  bool get isSuccess => errorCode == 0;
+
 }

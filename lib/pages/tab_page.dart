@@ -46,7 +46,7 @@ class _TabPageState extends State<TabPage> {
             currentIndex: _selectedIndex,
             type: BottomNavigationBarType.fixed,
             // 选中时的字体样式
-            selectedLabelStyle: TextStyle(fontSize: 13, color: Colors.black),
+            selectedLabelStyle: TextStyle(fontSize: 12, color: Colors.black),
             // 未选中时的字体样式
             unselectedLabelStyle: TextStyle(fontSize: 12, color: Color.fromRGBO(0, 0, 0, 0.24)),
             items: _tabItems(),

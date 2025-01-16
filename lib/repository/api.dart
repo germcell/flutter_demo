@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_workspace/repository/datas/api_response.dart';
 import '../http/dio_instance.dart';
 import 'datas/home_banner_data.dart';
 
@@ -56,6 +57,18 @@ class Api {
       "password": password
     });
     return response;
+  }
+
+  /// 收藏文章
+  Future collectArticle(num? id) async {
+    Response response = await DioInstance.instance().post("/lg/collect/$id/json");
+    return response;
+  }
+
+  /// 取消收藏文章
+  Future<ApiResponse> unCollectArticle(num? id) async {
+    Response response = await DioInstance.instance().post("/lg/uncollect_originId/$id/json");
+    return ApiResponse.fromJson(response.data, null);
   }
 
 }

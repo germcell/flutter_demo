@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
           // 安全区域，除了状态栏和底部栏的区域
           body: SafeArea(
             // 上下拉刷新组件
+            // TODO SmartRefresher组件封装
             child: SmartRefresher(
               controller: refreshController,
               // 上下拉刷新
@@ -164,11 +165,13 @@ class _HomePageState extends State<HomePage> {
                           ),
                           // 横向撑开
                           Expanded(child: SizedBox()),
-                          Text("2021-10-10 10:20",
+                          (item.publishTime != null)
+                          ? Text(homeViewModel.formatTime(item.publishTime),
                               style: TextStyle(
                                 color: Color.fromARGB(179, 17, 17, 17),
                                 fontSize: 12,
-                              )),
+                              ))
+                          :SizedBox(),
                           // Expanded(child: SizedBox.width(10),
                           SizedBox(width: 5),
                           (item.type == 1)
@@ -204,14 +207,22 @@ class _HomePageState extends State<HomePage> {
                                       fontSize: 12),
                                 )
                               : SizedBox(),
-                          SizedBox(width: 5),
-                          Text(
-                            "收藏",
-                            style: TextStyle(
-                                color: Color.fromARGB(179, 17, 17, 17),
-                                fontSize: 12),
-                          ),
-                        ],
+                          Expanded(child: SizedBox(width: 5)),
+                          GestureDetector(
+                            onTap: () {
+                              if (item.collect == true) {
+                                homeViewModel.unCollectArticle(item.id, idx);
+                              } else {
+                                homeViewModel.collectArticle(item.id, idx);
+                              }
+                            },
+                            child: Text(
+                              (item.collect == true) ? "取消收藏" : "收藏",
+                              style: TextStyle(
+                              color: Color.fromARGB(179, 17, 17, 17),
+                              fontSize: 12),
+                              ),
+                          )],
                       ),
                     ],
                   ),
