@@ -71,4 +71,10 @@ class Api {
     return ApiResponse.fromJson(response.data, null);
   }
 
+  /// 退出登录
+  Future<ApiResponse> logout() async {
+    Response response = await DioInstance.instance().get("/user/logout/json");
+    return ApiResponse.fromJson(response.data, null);
+  }
+
 }
