@@ -17,12 +17,7 @@ class KnowledgeViewModel with ChangeNotifier {
     if (children == null || children.isEmpty) {
       return "";
     }
-    StringBuffer sb = StringBuffer();
-    for (var item in children) {
-      sb.write(item.name);
-      sb.write("、");
-    }
-    return sb.toString();
+    return children.map((item) => item.name).join("、");
   }
 
 }
