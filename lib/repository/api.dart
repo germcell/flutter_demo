@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_workspace/repository/datas/api_response.dart';
+import 'package:flutter_workspace/repository/datas/knowledge_data.dart';
 import '../http/dio_instance.dart';
 import 'datas/home_banner_data.dart';
+import 'datas/knowledge_list_data.dart';
 
 /// API
 class Api {
@@ -75,6 +77,12 @@ class Api {
   Future<ApiResponse> logout() async {
     Response response = await DioInstance.instance().get("/user/logout/json");
     return ApiResponse.fromJson(response.data, null);
+  }
+
+  /// 获取体系数据
+  Future<KnowledgeData> getKnowledgeArticle() async {
+    Response response = await DioInstance.instance().get("/tree/json");
+    return KnowledgeData.fromJson(response.data);
   }
 
 }

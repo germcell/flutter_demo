@@ -5,7 +5,7 @@ import 'package:flutter_workspace/component/ui/navbar_item.dart';
 import 'category/category_page.dart';
 import 'home_page.dart';
 import 'mine/mine_page.dart';
-import 'notify/notify_page.dart';
+import 'notify/knowledage.dart';
 
 /// 底部导航栏，当有导航栏后需要将此页面设置为路由的首页
 /// TODO 封装导航组件，如果有多个页面需要使用底部导航栏，可以复用
@@ -34,7 +34,7 @@ class _TabPageState extends State<TabPage> {
         children: [
           HomePage(),
           CategoryPage(),
-          NotifyPage(),
+          KnowledgePage(),
           MinePage()
         ],
       ),

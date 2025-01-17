@@ -18,6 +18,20 @@ class ApiResponse<T> {
     );
   }
 
+  /// 解析数组
+  factory ApiResponse.fromJsonList(
+      Map<String, dynamic> json,
+      T Function(dynamic json) fromJsonT,
+      ) {
+    return ApiResponse<T>(
+      data: json['data'] != null
+          ? (json['data'] as List).map((item) => fromJsonT(item)).toList() as T
+          : null,
+      errorCode: json['errorCode'],
+      errorMsg: json['errorMsg'],
+    );
+  }
+
   Map<String, dynamic> toJson(Object? Function(T value) toJsonT) {
     return {
       'data': data != null ? toJsonT(data!) : null,
