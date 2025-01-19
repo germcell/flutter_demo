@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_workspace/repository/datas/api_response.dart';
+import 'package:flutter_workspace/repository/datas/knowledge_child_data.dart';
 import 'package:flutter_workspace/repository/datas/knowledge_data.dart';
 import '../http/dio_instance.dart';
 import 'datas/home_banner_data.dart';
@@ -83,6 +84,15 @@ class Api {
   Future<KnowledgeData> getKnowledgeArticle() async {
     Response response = await DioInstance.instance().get("/tree/json");
     return KnowledgeData.fromJson(response.data);
+  }
+
+  /// 获取体系下的文章
+  Future<KnowledgeChildData> getKnowledgeArticleList(int page, String cid, int pageSize) async {
+    Response response = await DioInstance.instance().get("/article/list/$page/json", queryParameters: {
+      "cid": cid,
+      "page_size": pageSize
+    });
+    return KnowledgeChildData.fromJson(response.data);
   }
 
 }
