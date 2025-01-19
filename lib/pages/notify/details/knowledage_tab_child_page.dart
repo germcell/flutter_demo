@@ -32,7 +32,7 @@ class _KnowledgeChildTabPageState extends State<KnowledgeChildTabPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    return ChangeNotifierProvider<KnowledgeDetailsViewModel>(
         create: (context) {
           return knowledgeDetailsViewModel;
     }, child: Scaffold(

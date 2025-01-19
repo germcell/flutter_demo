@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_workspace/pages/category/category_vm.dart';
+import 'package:flutter_workspace/pages/search/search_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../route/routes.dart';
@@ -39,14 +40,19 @@ class _CategoryPageState extends State<CategoryPage> {
                 // SingleChildScrollView可以滚动
                 child: SingleChildScrollView(
                     child: Column(children: [
-          // 搜索框
-          _hotkeySearch(),
-          // 热词列表
-          _hotkeyList(),
-          // 网站搜索框
-          _websiteSearch(),
-          // 网站列表
-          _websiteList(),
+                      // 搜索框
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePath.search);
+                        },
+                        child: _hotkeySearch(),
+                      ),
+                      // 热词列表
+                      _hotkeyList(),
+                      // 网站搜索框
+                      _websiteSearch(),
+                      // 网站列表
+                      _websiteList(),
         ])))));
   }
 
@@ -131,10 +137,11 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
       ),
       child: Row(children: [
-        Text("搜索热词", style: TextStyle(color: Colors.black)),
-        Expanded(child: SizedBox()),
-        Icon(Icons.search)
-      ]),
+          Text("搜索热词", style: TextStyle(color: Colors.black)),
+          Expanded(child: SizedBox()),
+          Icon(Icons.search)
+        ],
+      ),
     );
   }
 
@@ -163,9 +170,11 @@ class _CategoryPageState extends State<CategoryPage> {
             final item = model.hotKeyList?[idx];
             return GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, RoutePath.webView, arguments: {
-                  "name": "Category HotKey",
-                });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SearchPage(searchKey: item?.name ?? "")
+                ));
               },
               child: Container(
                 alignment: Alignment.center,

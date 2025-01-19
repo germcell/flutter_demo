@@ -3,10 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_workspace/pages/auth/login_page.dart';
 import 'package:flutter_workspace/pages/auth/register_page.dart';
 import 'package:flutter_workspace/pages/notify/details/knowledage_details_tab_page.dart';
+import 'package:flutter_workspace/pages/search/search_page.dart';
 import 'package:flutter_workspace/pages/tab_page.dart';
 import 'package:flutter_workspace/pages/web_view_page.dart';
-
-import '../pages/home_page.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -22,6 +21,8 @@ class Routes {
         return pageRoute(RegisterPage(), settings: settings);
       case RoutePath.knowledgeDetailsTabPage:
         return pageRoute(KnowledgeDetailsTabPage(), settings: settings);
+      case RoutePath.search:
+        return pageRoute(SearchPage(), settings: settings);
     }
     // 未定义的路由
     return pageRoute(Scaffold(
@@ -62,4 +63,7 @@ class RoutePath {
 
   // 体系明细页面
   static const String knowledgeDetailsTabPage = '/knowledge/details';
+
+  // 搜索页面
+  static const String search = '/search';
 }

@@ -5,6 +5,7 @@ import 'package:flutter_workspace/repository/datas/knowledge_data.dart';
 import '../http/dio_instance.dart';
 import 'datas/home_banner_data.dart';
 import 'datas/knowledge_list_data.dart';
+import 'datas/search_data.dart';
 
 /// API
 class Api {
@@ -93,6 +94,15 @@ class Api {
       "page_size": pageSize
     });
     return KnowledgeChildData.fromJson(response.data);
+  }
+
+  /// 搜索文章
+  Future<SearchData> searchArticle(int page, String key, int pageSize) async {
+    Response response = await DioInstance.instance().post("/article/query/$page/json", queryParameters: {
+      "k": key,
+      "page_size": pageSize
+    });
+    return SearchData.fromJson(response.data);
   }
 
 }
