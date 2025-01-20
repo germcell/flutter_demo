@@ -74,6 +74,8 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.2
   # 国际化
   intl: ^0.18.1 # 添加 intl 包
+  # webview：基于原生webview封装的
+  flutter_inappwebview: ^5.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

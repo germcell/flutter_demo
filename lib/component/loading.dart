@@ -8,8 +8,7 @@ class Loading {
   Loading._();
 
   /// 开启加载中动画
-  static Future showLoading() async {
-    print('showLoading');
+  static Future showLoading({Duration? duration}) async {
     showToastWidget(
       Container(
         // 透明背景
@@ -33,7 +32,7 @@ class Loading {
       ),
       handleTouch: true,
       // 持续时间，由dismissAll()关闭
-      duration: Duration(days: 1),
+      duration: duration ?? Duration(days: 1),
     );
   }
 
