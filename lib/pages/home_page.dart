@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
+import 'package:flutter_workspace/component/loading.dart';
 import 'package:flutter_workspace/repository/datas/home_list_data.dart';
 import 'package:flutter_workspace/pages/home_vm.dart';
 import 'package:flutter_workspace/route/routes.dart';
@@ -26,9 +27,22 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     // _initBannerData();
-    // 获取数据
-    homeViewModel.getHomeBanner();
-    homeViewModel.getAllHomeList();
+    // Loading.showLoading();
+    // initPageData();
+
+    // 通过微任务，等待页面渲染完成后再加载数据
+    Future.microtask(() {
+      initPageData();
+    });
+
+  }
+
+  // 使用loading组件要注意，都是异步操作，所以要等待异步操作（await 查数据）完成后再关闭loading
+  void initPageData() async {
+    Loading.showLoading();
+    await homeViewModel.getHomeBanner();
+    await homeViewModel.getAllHomeList();
+    Loading.dismissAll();
   }
 
   // 这种强制刷新的方式，不推荐使用，因为会导致整个页面刷新
