@@ -4,6 +4,8 @@ import 'package:flutter_workspace/pages/category/category_vm.dart';
 import 'package:flutter_workspace/pages/search/search_page.dart';
 import 'package:provider/provider.dart';
 
+import '../../component/web/webview_page.dart';
+import '../../component/web/webview_widget.dart';
 import '../../route/routes.dart';
 
 /// 分类页面
@@ -80,9 +82,18 @@ class _CategoryPageState extends State<CategoryPage> {
             final item = model.webSiteList?[idx];
             return GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, RoutePath.webView, arguments: {
-                  "name": "Category WebSite",
-                });
+                // Navigator.pushNamed(context, RoutePath.webView, arguments: {
+                //   "name": "Category WebSite",
+                // });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return WebViewPage(
+                          loadResource: item?.link ?? "",
+                          webViewType: WebViewType.URL,
+                          showTitle: true,
+                          title: item?.name ?? "");
+                    }));
               },
               child: Container(
                 alignment: Alignment.center,

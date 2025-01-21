@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_workspace/component/web/webview_widget.dart';
 import 'package:flutter_workspace/pages/auth/login_page.dart';
 import 'package:flutter_workspace/pages/auth/register_page.dart';
 import 'package:flutter_workspace/pages/notify/details/knowledage_details_tab_page.dart';
 import 'package:flutter_workspace/pages/search/search_page.dart';
 import 'package:flutter_workspace/pages/tab_page.dart';
-import 'package:flutter_workspace/pages/web_view_page.dart';
+
+import '../component/web/webview_page.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -14,7 +16,7 @@ class Routes {
       case RoutePath.tab:
         return pageRoute(TabPage(), settings: settings);
       case RoutePath.webView:
-        return pageRoute(WebViewPage(name: "Form HomePage"), settings: settings);
+        return pageRoute(WebViewPage(loadResource: "", webViewType: WebViewType.URL,), settings: settings);
       case RoutePath.login:
         return pageRoute(LoginPage(), settings: settings);
       case RoutePath.register:

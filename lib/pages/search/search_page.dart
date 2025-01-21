@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_html/flutter_html.dart';
 
+import '../../component/web/webview_page.dart';
+import '../../component/web/webview_widget.dart';
+
 /// 搜索页面
 class SearchPage extends StatefulWidget {
   final String? searchKey;
@@ -136,18 +139,32 @@ class _SearchPageState extends State<SearchPage> {
                         border: Border(bottom: BorderSide(color: Colors.grey)),
                     ),
                     child: Column(children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        // Html渲染
-                        child: Html(
-                          data: item.title ?? "",
-                          style: {
-                            "html": Style(
-                              fontSize: FontSize(14),
-                            ),
-                          },
+                      // 在真机上使用gestureDetector无法实现点击效果，使用InkWell代替
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                            return WebViewPage(
+                              loadResource: item.link ?? "",
+                              webViewType: WebViewType.URL,
+                              showTitle: true,
+                              title: item.title);
+                          }));
+                        },
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          // Html渲染
+                          child: Html(
+                            data: item.title ?? "",
+                            style: {
+                              "html": Style(
+                                fontSize: FontSize(14),
+                              ),
+                            },
+                          ),
                         ),
-                      ),
+                      )
                     ]),
                   );
                 },

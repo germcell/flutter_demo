@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:flutter_workspace/component/loading.dart';
+import 'package:flutter_workspace/component/web/webview_widget.dart';
 import 'package:flutter_workspace/repository/datas/home_list_data.dart';
 import 'package:flutter_workspace/pages/home_vm.dart';
 import 'package:flutter_workspace/route/routes.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import '../component/web/webview_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -113,16 +116,29 @@ class _HomePageState extends State<HomePage> {
           control: const SwiperControl(),
           itemCount: vm.bannerData?.length ?? 0,
           itemBuilder: (context, index) {
-            return Container(
-              // 容器边距
-              // margin: const EdgeInsets.all(10),
-              height: 150,
-              color: Colors.purple,
-              child: Image.network(
-                vm.bannerData?[index].imagePath ?? "",
-                // 图片填充方式
-                fit: BoxFit.cover,
-              ),
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return WebViewPage(
+                          loadResource: vm.bannerData?[index].url ?? "",
+                          webViewType: WebViewType.URL,
+                          showTitle: true,
+                          title: vm.bannerData?[index].title);
+                    }));
+              },
+              child: Container(
+                // 容器边距
+                // margin: const EdgeInsets.all(10),
+                height: 150,
+                color: Colors.purple,
+                child: Image.network(
+                  vm.bannerData?[index].imagePath ?? "",
+                  // 图片填充方式
+                  fit: BoxFit.cover,
+                ),
+              )
             );
           },
         ),
@@ -144,9 +160,18 @@ class _HomePageState extends State<HomePage> {
                 // 点击事件+跳转页面+传递参数
                 onTap: () {
                   // 方式1：封装路由
-                  Navigator.pushNamed(context, RoutePath.webView, arguments: {
-                    "name": "Arguments From HomePage",
-                  });
+                  // Navigator.pushNamed(context, RoutePath.webView, arguments: {
+                  //   "name": "Arguments From HomePage",
+                  // });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return WebViewPage(
+                            loadResource: item.link ?? "",
+                            webViewType: WebViewType.URL,
+                            showTitle: true,
+                            title: item.title);
+                  }));
                   // 方式2：直接通过组件名跳转
                   // Navigator.push(context, MaterialPageRoute(builder: (context) {
                   //   return const WebViewPage(title: "From HomePage");

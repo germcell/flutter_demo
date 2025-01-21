@@ -115,7 +115,7 @@ class _WebViewWidgetState extends State<WebViewWidget> {
         // webview生命周期
         onProgressChanged: (InAppWebViewController controller, int progress) {},
         onLoadStart: (InAppWebViewController controller, Uri? url) {
-          Loading.showLoading(duration: const Duration(seconds: 45));
+          Loading.showLoading(duration: const Duration(seconds: 30));
         },
         onLoadError: (InAppWebViewController controller, Uri? url, int code, String message) {
           Loading.dismissAll();

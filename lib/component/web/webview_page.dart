@@ -40,7 +40,31 @@ class _WebViewPageState extends State<WebViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: (widget.showTitle ?? false)
-          ? AppBar(title: _buildAppBarTitle(widget.showTitle, widget.title))
+          ? AppBar(
+              centerTitle: true,
+              title: _buildAppBarTitle(widget.showTitle, widget.title),
+              // leadingWidth: 30, // 调整 leading 的宽度
+              // leading: IconButton(
+              //   icon: Icon(Icons.arrow_back),
+              //   onPressed: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
+              // actionsIconTheme: IconThemeData(size: 24), // 调整图标大小
+              // actions: [
+              //   IconButton(
+              //     icon: Icon(Icons.refresh),
+              //     onPressed: () {
+              //       // TODO 重新加载页面
+              //     },
+              //   ),
+              //   IconButton(
+              //     icon: Icon(Icons.more_vert),
+              //     onPressed: () {
+              //       // TODO 显示更多菜单
+              //     },
+              //   )],
+            )
           : null,
       body: SafeArea(
         child: WebViewWidget(
@@ -56,9 +80,9 @@ class _WebViewPageState extends State<WebViewPage> {
     var show = showTitle ?? false;
     return show
         ? Html(data: title ?? "", style: {
-            //整体样式使用 html
-            "html": Style(fontSize: FontSize(15.sp))
-          })
+          //整体样式使用 html
+          "html": Style(fontSize: FontSize(15.sp))
+        })
         : const SizedBox.shrink();
   }
 
